@@ -322,7 +322,7 @@ modelWarehouse = unet(16, (img_width,img_height, 3))
 # weights_path = get_file(
 #             None,
 #             origin='https://drive.google.com/uc?export=download&id=1l1bmU6wAtwbgefu66Uk2GxLvp0YuV-dS', extract=True)
-weights_path = 'C:/Users/zyrik/Downloads/WarehouseWeights_test3.h5'
+weights_path = 'C:/Users/zyrik/Downloads/WarehouseWeights_test4.h5'
 modelWarehouse.load_weights(weights_path)
 
 
@@ -365,7 +365,7 @@ def find(r1, g1, b1, r2, g2, b2, bl, tr1, tr2, m):
             continue
         else:
             rects.append({"x": x, "y": y, "w": w, "h": h, "m": m})
-            cv2.rectangle(copy_out, (x, y), (x + w, y + h), (0, 255, 0), 10)
+            cv2.rectangle(copy_out, (x, y), (x + w, y + h), (0, 255, 0), 10) #copy_out
 
 
 camera = cv2.VideoCapture(0)
@@ -402,22 +402,22 @@ while True:
 
 
     find(r1=0, g1=255, b1=0, r2=0, g2=255, b2=0, bl=8, tr1=0, tr2=255, m=1) #Тенисный мяч
-    find(r1=255, g1=255, b1=0, r2=255, g2=255, b2=0, bl=8, tr1=0, tr2=255, m=1) #Волейбольный мяч
-    find(r1=255, g1=0, b1=0, r2=255, g2=0, b2=0, bl=8, tr1=0, tr2=255, m=1) #Попрыгунчик
-    find(r1=0, g1=0, b1=255, r2=0, g2=0, b2=255, bl=8, tr1=0, tr2=255, m=1) #Пластиковый синий мяч
-    find(r1=0, g1=255, b1=255, r2=0, g2=255, b2=255, bl=8, tr1=0, tr2=255, m=1) #Герметик
-    find(r1=130, g1=130, b1=0, r2=130, g2=130, b2=0, bl=8, tr1=0, tr2=255, m=1) #Кронштейн
-    find(r1=0, g1=130, b1=130, r2=0, g2=130, b2=130, bl=8, tr1=0, tr2=255, m=1) #Манипулятор
-    find(r1=255, g1=0, b1=255, r2=255, g2=0, b2=255, bl=8, tr1=0, tr2=255, m=1) #Куб с чёрными наклейками
-    find(r1=255, g1=130, b1=30, r2=255, g2=130, b2=30, bl=8, tr1=0, tr2=255, m=1) #Ваза
-    find(r1=155, g1=25, b1=25, r2=155, g2=25, b2=25, bl=8, tr1=0, tr2=255, m=1) #Контейнер со стикером
-    find(r1=155, g1=155, b1=255, r2=155, g2=155, b2=255, bl=8, tr1=0, tr2=255, m=1) #Ферма
-    find(r1=255, g1=240, b1=135, r2=255, g2=240, b2=135, bl=8, tr1=0, tr2=255, m=1) #Палет с микросхемой
-    find(r1=255, g1=75, b1=0, r2=255, g2=75, b2=0, bl=8, tr1=0, tr2=255, m=1) #Бабина
-    find(r1=0, g1=145, b1=15, r2=0, g2=145, b2=15, bl=8, tr1=0, tr2=255, m=1) #Гусь
-    find(r1=90, g1=0, b1=90, r2=90, g2=0, b2=90, bl=8, tr1=0, tr2=255, m=1) #Трактор
+    find(r1=255, g1=255, b1=0, r2=255, g2=255, b2=0, bl=8, tr1=0, tr2=255, m=2) #Волейбольный мяч
+    find(r1=255, g1=0, b1=0, r2=255, g2=0, b2=0, bl=8, tr1=0, tr2=255, m=3) #Попрыгунчик
+    find(r1=0, g1=0, b1=255, r2=0, g2=0, b2=255, bl=8, tr1=0, tr2=255, m=4) #Пластиковый синий мяч
+    find(r1=0, g1=255, b1=255, r2=0, g2=255, b2=255, bl=8, tr1=0, tr2=255, m=5) #Герметик
+    find(r1=130, g1=130, b1=0, r2=130, g2=130, b2=0, bl=8, tr1=0, tr2=255, m=6) #Кронштейн
+    find(r1=0, g1=130, b1=130, r2=0, g2=130, b2=130, bl=8, tr1=0, tr2=255, m=7) #Манипулятор
+    find(r1=255, g1=0, b1=255, r2=255, g2=0, b2=255, bl=8, tr1=0, tr2=255, m=8) #Куб с чёрными наклейками
+    find(r1=255, g1=130, b1=30, r2=255, g2=130, b2=30, bl=8, tr1=0, tr2=255, m=9) #Ваза
+    find(r1=155, g1=25, b1=25, r2=155, g2=25, b2=25, bl=8, tr1=0, tr2=255, m=10) #Контейнер со стикером
+    find(r1=155, g1=155, b1=255, r2=155, g2=155, b2=255, bl=8, tr1=0, tr2=255, m=11) #Ферма
+    find(r1=255, g1=240, b1=135, r2=255, g2=240, b2=135, bl=8, tr1=0, tr2=255, m=12) #Палет с микросхемой
+    find(r1=255, g1=75, b1=0, r2=255, g2=75, b2=0, bl=8, tr1=0, tr2=255, m=13) #Бабина
+    find(r1=0, g1=145, b1=15, r2=0, g2=145, b2=15, bl=8, tr1=0, tr2=255, m=14) #Гусь
+    find(r1=90, g1=0, b1=90, r2=90, g2=0, b2=90, bl=8, tr1=0, tr2=255, m=15) #Трактор
 
-    output = cv2.resize(copy_out, dsize)
+    output = cv2.resize(copy_out, dsize) #copy_out
     cv2.imwrite('good.jpg', copy_out)
     cv2.imshow("ww", output)
 
