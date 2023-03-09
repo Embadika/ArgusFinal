@@ -19,57 +19,47 @@ import cv2
 
 img_width = 256
 img_height = 512
-num_classes = 21
+num_classes = 16
 
 def color2index(color):
     index=-1
-    if   (color[0]==255)   and (color[1]==0)  and (color[2]==0)  : index=0 # красный лоток для метизов
-    elif (color[0]==0)    and (color[1]==0)    and (color[2]==255)  : index=1 # синий мячик
-    elif (color[0]==200)    and (color[1]==255)  and (color[2]==0)    : index=2 # мячик для тенниса
-    elif (color[0]==50)  and (color[1]==205)    and (color[2]==0)    : index=3 # туба с герметиком
-    elif (color[0]==255)    and (color[1]==234)  and (color[2]==3)  : index=4 # трёхцветный мячик
-    elif (color[0]==240)  and (color[1]==3)    and (color[2]==255)  : index=5 # гигантский мячик попрыгунчик
-    elif (color[0]==169)  and (color[1]==125)  and (color[2]==50)    : index=6 # деревянный куб
-    elif (color[0]==117) and (color[1]==211) and (color[2]==190) : index=7 # прозрачный ящик
-    elif (color[0]==143)    and (color[1]==34)   and (color[2]==0) : index=8 # металлическая банка с надписью "крупа"
-    elif (color[0]==255)    and (color[1]==158) and (color[2]==128)    : index=9 # Шестерня
-    elif (color[0]==126) and (color[1]==132)    and (color[2]==206)    : index=10 # Предостерегающие знаки
-    elif (color[0]==42)    and (color[1]==120) and (color[2]==0) : index=11 # подшипник
-    elif (color[0]==148) and (color[1]==113)    and (color[2]==170) : index=12 # подставка с электроникой
-    elif (color[0]==139) and (color[1]==84) and (color[2]==84)    : index=13 # кронштейн
-    elif (color[0]==200)    and (color[1]==180)  and (color[2]==85) : index=14 # деревяный ящик
-    elif (color[0]==130)  and (color[1]==220)    and (color[2]==40) : index=15 # две пластины алюминия
-    elif (color[0]==82)  and (color[1]==163)    and (color[2]==255) : index=16 # коричневая картонная коробка
-    elif (color[0]==135)  and (color[1]==82)    and (color[2]==255) : index=17 # теплица omegagrow
-    elif (color[0]==179)  and (color[1]==173)    and (color[2]==106) : index=18 # загадочная белая коробка со штрихкодом
-    elif (color[0]==255)  and (color[1]==78)    and (color[2]==0) : index=19 # шпилька М12
-    else: index= 20
+    if   (color[0]==0)   and (color[1]==255)  and (color[2]==0)  : index=0 # Тенисный мяч
+    elif (color[0]==255)    and (color[1]==255)    and (color[2]==0)  : index=1 # Волейбольный мяч
+    elif (color[0]==255)    and (color[1]==0)  and (color[2]==0)    : index=2 # Попрыгунчик
+    elif (color[0]==0)  and (color[1]==0)    and (color[2]==255)    : index=3 # Пластиковый синий мяч
+    elif (color[0]==0)    and (color[1]==255)  and (color[2]==255)  : index=4 # Герметик
+    elif (color[0]==130)  and (color[1]==130)    and (color[2]==0)  : index=5 # Кронштейн
+    elif (color[0]==0)  and (color[1]==130)  and (color[2]==130)    : index=6 # Манипулятор
+    elif (color[0]==255) and (color[1]==0) and (color[2]==255) : index=7 # Куб с чёрными наклейками
+    elif (color[0]==255)    and (color[1]==130)   and (color[2]==30) : index=8 # Ваза
+    elif (color[0]==155)    and (color[1]==25) and (color[2]==25)    : index=9 # Контейнер со стикером
+    elif (color[0]==155) and (color[1]==155)    and (color[2]==255)    : index=10 # Ферма
+    elif (color[0]==255)    and (color[1]==240) and (color[2]==135) : index=11 # Палет с микросхемой
+    elif (color[0]==255) and (color[1]==75)    and (color[2]==0) : index=12 # Бабина
+    elif (color[0]==0) and (color[1]==145) and (color[2]==15)    : index=13 # Гусь
+    elif (color[0]==90)    and (color[1]==0)  and (color[2]==90) : index=14 # Трактор
+    else: index= 15
     return index 
 
 def index2color(index2):
     index = np.argmax(index2) # Получаем индекс максимального элемента
     color=[]
-    if   index == 0: color = [255, 0, 0]  # красный лоток для метизов
-    elif index == 1: color = [0, 0, 255]      # синий мячик
-    elif index == 2: color = [200, 255, 0]      # мячик для тенниса
-    elif index == 3: color = [50, 205, 0]      # туба с герметиком
-    elif index == 4: color = [255, 234, 3]    # трёхцветный мячик
-    elif index == 5: color = [240, 3, 255]    # гигантский мячик попрыгунчик
-    elif index == 6: color = [169, 125, 50]        # деревянный куб
-    elif index == 7: color = [117, 211, 190]        # прозрачный ящик
-    elif index == 8: color = [143, 34, 0]        # металлическая банка с надписью "крупа"
-    elif index == 9: color = [255, 158, 128]       # Шестерня
-    elif index == 10: color = [126, 132, 206]       # Предостерегающие знаки
-    elif index == 11: color = [42, 120, 0]       # подшипник
-    elif index == 12: color = [148, 113, 170]       # подставка с электроникой
-    elif index == 13: color = [139, 84, 84]       # кронштейн
-    elif index == 14: color = [200, 180, 85]       # деревяный ящик
-    elif index == 15: color = [130, 220, 40]       # две пластины алюминия
-    elif index == 16: color = [82, 163, 255]       # коричневая картонная коробка
-    elif index == 17: color = [138, 82, 255]       # теплица omegagrow
-    elif index == 18: color = [179, 173, 106]       # загадочная белая коробка со штрихкодом
-    elif index == 19: color = [255, 78, 0]       # шпилька М12
-    elif index == 20: color = [0, 0, 0]       # фон
+    if   index == 0: color = [0, 255, 0]  # Тенисный мяч
+    elif index == 1: color = [255, 255, 0]      # Волейбольный мяч
+    elif index == 2: color = [255, 0, 0]      # Попрыгунчик
+    elif index == 3: color = [0, 0, 255]      # Пластиковый синий мяч
+    elif index == 4: color = [0, 255, 255]    # Герметик
+    elif index == 5: color = [130, 130, 0]    # Кронштейн
+    elif index == 6: color = [0, 130, 130]        # Манипулятор
+    elif index == 7: color = [255, 0, 255]        # Куб с чёрными наклейками
+    elif index == 8: color = [255, 130, 30]        # Ваза
+    elif index == 9: color = [155, 25, 25]       # Контейнер со стикером
+    elif index == 10: color = [155, 155, 255]       # Ферма
+    elif index == 11: color = [255, 240, 135]       # Палет с микросхемой
+    elif index == 12: color = [255, 75, 0]       # Бабина
+    elif index == 13: color = [0, 145, 15]       # Гусь
+    elif index == 14: color = [90, 0, 90]       # Трактор
+    elif index == 15: color = [0, 0, 0]       # фон
     return color # Возвращаем цвет пикслея
 
 def rgbToohe(y, num_classes): 
@@ -326,13 +316,13 @@ def unet(num_classes = 2, input_shape= (176, 320, 3)):
     model.compile(optimizer=Adam(),
                   loss='categorical_crossentropy',
                   metrics=[dice_coef])
-    model.summary()
+    # model.summary()
     return model # Возвращаем сформированную модель
-modelWarehouse = unet(21, (img_width,img_height, 3))
+modelWarehouse = unet(16, (img_width,img_height, 3))
 # weights_path = get_file(
 #             None,
 #             origin='https://drive.google.com/uc?export=download&id=1l1bmU6wAtwbgefu66Uk2GxLvp0YuV-dS', extract=True)
-weights_path = 'C:/Users/zyrik/Downloads/WarehouseWeights_test2.h5'
+weights_path = 'C:/Users/zyrik/Downloads/WarehouseWeights_test3.h5'
 modelWarehouse.load_weights(weights_path)
 
 
@@ -380,18 +370,16 @@ def find(r1, g1, b1, r2, g2, b2, bl, tr1, tr2, m):
 
 camera = cv2.VideoCapture(0)
 
-
-
 while True:
     return_value, cam = camera.read()
     cv2.imwrite('rare.jpg', cam)
     airplane = image.load_img("rare.jpg",target_size=(img_width, img_height))
     airplane = image.img_to_array(airplane)
     airplane = np.array(airplane)
-    predict = np.array(modelWarehouse.predict(airplane.reshape(1, img_width, img_height, 3)))
+    predict = np.array(modelWarehouse.predict(airplane.reshape(1, img_width, img_height, 3), verbose =0))
     pr = predict[0]
     pr1 = []
-    pr = pr.reshape(-1, 21)
+    pr = pr.reshape(-1, 16)
     for k in range(len(pr)):
       pr1.append(index2color(pr[k]))
     pr1 = np.array(pr1, np.uint8)
@@ -402,7 +390,7 @@ while True:
     # cv2.waitKey(0)
 
     # image = cv2.imread(input())  # input()"" "K:\Downloads\(10).jpg"
-    scale_percent = 100  # calculate the 50 percent of original dimensions
+    scale_percent = 150  # calculate the 50 percent of original dimensions
     copy = pr1.copy()
     copy_out = pr1.copy()
     width = int(copy.shape[1] * scale_percent / 100)
